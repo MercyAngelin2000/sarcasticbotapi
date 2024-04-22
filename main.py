@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from schema import bot
 
 import os
 from dotenv import load_dotenv
@@ -21,7 +22,7 @@ app.add_middleware(
 )
  
 @app.post("/chatbot")
-def generateTxt(data:str):
+def generateTxt(data:bot):
     response = client.chat.completions.create(
     model="gpt-3.5-turbo",
     messages=[
@@ -55,7 +56,7 @@ def generateTxt(data:str):
     },
     {
       "role": "user",
-      "content": data
+      "content": data.data
     }
   ],
   temperature=0.5,
